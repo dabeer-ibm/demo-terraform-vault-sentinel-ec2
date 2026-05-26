@@ -1,0 +1,25 @@
+# restrict-region.sentinel
+#
+# Enforcement: advisory (warns but never blocks).
+# Flags any AWS provider configured for a region outside the allow-list.
+
+import "tfplan/v2" as tfplan
+
+allowed_regions = ["us-east-1", "us-west-2", "ap-south-1"]
+
+aws_providers = filter tfplan.configuration.provider_configurations as _, pc {
+  pc.name is "aws"
+}
+
+violations = filter aws_providers as _, pc {
+  region = pc.expressions.region.constant_value else ""
+  region is not "" and region not in allowed_regions
+}
+
+for violations as addr, pc {
+  print("⚠", addr, "uses non-preferred region:", pc.expressions.region.constant_value)
+}
+
+main = rule {
+  length(violations) is 0
+}

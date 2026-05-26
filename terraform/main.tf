@@ -45,14 +45,6 @@ data "aws_subnets" "default" {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
-  filter {
-    name   = "default-for-az"
-    values = ["true"]
-  }
-  filter {
-    name   = "availability-zone"
-    values = data.aws_ec2_instance_type_offerings.supported.locations
-  }
 }
 
 data "aws_security_group" "default" {

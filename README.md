@@ -1,4 +1,4 @@
-# Demo: HCP Vault + Terraform + Sentinel → EC2
+# Demo: HCP Vault + Terraform + Sentinel → EC2.
 
 End-to-end HashiCorp stack demo with **policy-as-code**. Everything is set up manually via web UIs and CLIs — no bootstrap scripts.
 

@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.large"
+  default = "t3.micro   "
 }
 
 variable "instance_name" {
@@ -63,6 +63,18 @@ variable "hcp_client_secret" {
 
 variable "hcp_project_id" {
   description = "Compatibility variable for HCP Terraform workspaces that still pass legacy HCP settings as Terraform variables"
+  type        = string
+  default     = ""
+}
+
+variable "hcp_packer_bucket" {
+  description = "Compatibility variable for HCP Terraform workspaces that still pass legacy HCP Packer settings as Terraform variables"
+  type        = string
+  default     = ""
+}
+
+variable "hcp_packer_channel" {
+  description = "Compatibility variable for HCP Terraform workspaces that still pass legacy HCP Packer settings as Terraform variables"
   type        = string
   default     = ""
 }

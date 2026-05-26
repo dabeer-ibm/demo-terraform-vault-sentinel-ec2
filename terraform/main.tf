@@ -47,6 +47,19 @@ data "aws_subnets" "default" {
   }
 }
 
+data "aws_subnet" "default" {
+  for_each = toset(data.aws_subnets.default.ids)
+
+  id = each.value
+}
+
+locals {
+  supported_subnet_ids = [
+    for subnet in data.aws_subnet.default : subnet.id
+    if contains(data.aws_ec2_instance_type_offerings.supported.locations, subnet.availability_zone)
+  ]
+}
+
 data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
   name   = "default"
@@ -69,7 +82,7 @@ resource "aws_instance" "demo" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.demo.key_name
 
-  subnet_id              = data.aws_subnets.default.ids[0]
+  subnet_id              = local.supported_subnet_ids[0]
   vpc_security_group_ids = [data.aws_security_group.default.id]
 
   tags = {

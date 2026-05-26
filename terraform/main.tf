@@ -56,7 +56,7 @@ data "aws_security_group" "default" {
 # Import the SSH public key (from Vault) as an AWS key pair so EC2 can attach it
 # =============================================================================
 resource "aws_key_pair" "demo" {
-  key_name   = "${var.instance_name}-key"
+  key_name_prefix = "${var.instance_name}-"
   public_key = data.vault_kv_secret_v2.ssh.data["public_key"]
 }
 

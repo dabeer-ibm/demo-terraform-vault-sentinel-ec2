@@ -18,10 +18,7 @@ variable "environment" {
   default = "demo"
 }
 
-variable "owner" {
-  type    = string
-  default = "dabs"
-}
+
 
 variable "vault_aws_role" {
   description = "Vault AWS secrets engine role that mints dynamic IAM creds"
